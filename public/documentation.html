@@ -5,9 +5,164 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Movie API</title>
 </head>
+<style>
+  table {
+    border-collapse: collapse;
+  }
+  th {
+    padding:20px;
+    text-align: left;
+    border-bottom: 2px solid black;
+  }
+  td {
+    padding: 20px;
+    border-bottom: 1px solid black;
+  }
+</style>
 <body>
   <h1>Movie API</h1>
   <p>This web application will provide clients with information about different movies, directors, and genres. Users will also be able to sign up on the app, update their information, and form a list of their favorite movies.</p>
+  <table>
+    <tr>
+      <th>Request</th>
+      <th>URL</th>
+      <th>HTTP Method</th>
+      <th>Parameters</th>
+      <th>Request Body</th>
+      <th>Response Body</th>
+    </tr>
+    <tr>
+      <td>Retrieves a list of all available movies.</td>
+      <td>/movies</td>
+      <td>GET</td>
+      <td>N/A</td>
+      <td>None</td>
+      <td>A JSON object holding data of all the movies available.<br><br>
+      Example: 
+      <pre>
+      [
+        {
+            "name": "The Avengers",
+            "director": "Joss Whedon"
+        },
+        {
+            "name": "The Lord of the Rings: Return of the King",
+            "director": "Peter Jackson"
+        }
+      ]
+      </pre>
+     </td>
+    </tr>
+    <tr>
+      <td>Retrieves data about a single movie by title.</td>
+      <td>/movies/[Name]</td>
+      <td>GET</td>
+      <td>/[Name]<br><br>
+      Example: /movies/The%20Avengers</td>
+      <td>None</td>
+      <td>A JSON object holding data of a single movie.<br><br>
+      Example: 
+      <pre>
+      [
+        {
+            "name": "The Avengers",
+            "director": "Joss Whedon"
+        }
+      ]
+      </pre>
+      </td>
+    </tr>
+    <tr>
+      <td>Retrieves data about a particular genre.</td>
+      <td>/genres/[Name]</td>
+      <td>GET</td>
+      <td>/[Name]<br><br>
+      Example: /genres/genreName</td>
+      <td>None</td>
+      <td>Text data about a certain genre based on genre name.<br><br>
+      Example:<br>
+      <em>Thriller</em><br>
+      Example text here.
+      </td>
+    </tr>
+    <tr>
+      <td>Retrieves data about a certain director by name.</td>
+      <td>/directors/[Name]</td>
+      <td>GET</td>
+      <td>/[Name]<br><br>
+      Example: /directors/directorName</td>
+      <td>None</td>
+      <td>A JSON object holding data about a single director.<br><br>
+      Example: 
+      <pre>
+      [
+        {
+            "name": "Joss Whedon",
+            "birth year": "1964"
+        }
+      ]
+      </pre>
+      </td>
+    </tr>
+    <tr>
+      <td>Allow new users to register</td>
+      <td>/users</td>
+      <td>POST</td>
+      <td>N/A</td>
+      <td>A JSON object holding the new user's data.<br><br>
+      Example:
+      <pre>
+      {
+       "username" : "newuser"
+      }
+      </pre></td>
+      <td>A JSON object holding data about the new user added plus a unique ID.<br><br>
+      Example:
+      <pre>
+      {
+        "username" : "newuser",
+        "id" : "12345"
+      }
+      </pre>
+      </td>
+    </tr>
+    <tr>
+      <td>Allow a user to update their username.</td>
+      <td>/users/[Username]</td>
+      <td>PUT</td>
+      <td>/[Username]<br><br>
+      Example: /users/emdowney</td>
+      <td>None</td>
+      <td>A message indicating the update was successful.</td>
+    </tr>
+    <tr>
+      <td>Allow users to add a movie to their favorites list.</td>
+      <td>/users/[Username]/favorites</td>
+      <td>POST</td>
+      <td>/[Username]/favorites<br><br>
+      Example: /users/emdowney/favorites</td>
+      <td>None</td>
+      <td>A message indicating the movie was added successfully to the user's favorites.</td>
+    </tr>
+    <tr>
+      <td>Allow users to delete a movie from their favorites.</td>
+      <td>/users/[Username]/favorites</td>
+      <td>DELETE</td>
+      <td>/[Username]/favorites<br><br>
+      Example: /users/emdowney/favorites</td>
+      <td>None</td>
+      <td>A message indicating the deletion was successful.</td>
+    </tr>
+    <tr>
+      <td>Allow existing users to deregister</td>
+      <td>/users/[Username]</td>
+      <td>DELETE</td>
+      <td>/[Username]<br><br>
+      Example: /users/emdowney</td>
+      <td>None</td>
+      <td>A message indicating the user deregistered successfully.</td>
+    </tr>
+  </table>
 
 </body>
 </html>
