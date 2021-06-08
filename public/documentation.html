@@ -55,9 +55,9 @@
     </tr>
     <tr>
       <td>Retrieves data about a single movie by title.</td>
-      <td>/movies/[Name]</td>
+      <td>/movies/[Title]</td>
       <td>GET</td>
-      <td>/[Name]<br><br>
+      <td>/[Title]<br><br>
       Example: /movies/The%20Avengers</td>
       <td>None</td>
       <td>A JSON object holding data of a single movie.<br><br>
@@ -77,12 +77,18 @@
       <td>/genres/[Name]</td>
       <td>GET</td>
       <td>/[Name]<br><br>
-      Example: /genres/genreName</td>
+      Example: /genres/Fantasy</td>
       <td>None</td>
-      <td>Text data about a certain genre based on genre name.<br><br>
+      <td>A JSON object holding data about a certain genre based on genre name.<br><br>
       Example:<br>
-      <em>Thriller</em><br>
-      Example text here.
+      <pre>
+        [
+          {
+              "name": "Fantasy",
+              "description": "Example description here."
+          }
+        ]
+        </pre>
       </td>
     </tr>
     <tr>
@@ -90,7 +96,7 @@
       <td>/directors/[Name]</td>
       <td>GET</td>
       <td>/[Name]<br><br>
-      Example: /directors/directorName</td>
+      Example: /directors/Joss%20Whedon</td>
       <td>None</td>
       <td>A JSON object holding data about a single director.<br><br>
       Example: 
@@ -127,40 +133,73 @@
       </td>
     </tr>
     <tr>
-      <td>Allow a user to update their username.</td>
+      <td>Allow a user to update their information.</td>
       <td>/users/[Username]</td>
       <td>PUT</td>
       <td>/[Username]<br><br>
-      Example: /users/emdowney</td>
-      <td>None</td>
-      <td>A message indicating the update was successful.</td>
+      Example: /users/user1</td>
+      <td>A JSON object holding the data to be updated.<br><br>
+        Example:
+        <pre>
+        {
+          "username" : "newuser",
+          "password" : "12345"
+        }
+        </pre>
+      </td>
+      <td>A JSON object holding the updated data.<br><br>
+        Example:
+        <pre>
+        {
+          "username" : "newuser",
+          "password" : "12345"
+        }
+        </pre>
+      </td>
     </tr>
     <tr>
       <td>Allow users to add a movie to their favorites list.</td>
-      <td>/users/[Username]/favorites</td>
+      <td>/users/[Username]/favorites/[MovieID]</td>
       <td>POST</td>
-      <td>/[Username]/favorites<br><br>
-      Example: /users/emdowney/favorites</td>
+      <td>/[Username]/favorites[MovieID]<br><br>
+      Example: /users/user1/favorites/123</td>
       <td>None</td>
-      <td>A message indicating the movie was added successfully to the user's favorites.</td>
+      <td>A JSON object holding the user's updated favorites list.<br><br>
+        Example:
+        <pre>
+        {
+          "username" : "user1",
+          "favorites" : "123"
+        }
+        </pre></td>
     </tr>
     <tr>
       <td>Allow users to delete a movie from their favorites.</td>
-      <td>/users/[Username]/favorites</td>
+      <td>/users/[Username]/favorites/[MovieID]</td>
       <td>DELETE</td>
-      <td>/[Username]/favorites<br><br>
-      Example: /users/emdowney/favorites</td>
+      <td>/[Username]/favorites/[MovieID]<br><br>
+      Example: /users/user1/favorites/123</td>
       <td>None</td>
-      <td>A message indicating the deletion was successful.</td>
+      <td>A JSON object holding the user's updated favorites list.<br><br>
+        Example:
+        <pre>
+        {
+          "username" : "user1",
+          "favorites" : []
+        }
+        </pre></td>
     </tr>
     <tr>
       <td>Allow existing users to deregister</td>
       <td>/users/[Username]</td>
       <td>DELETE</td>
       <td>/[Username]<br><br>
-      Example: /users/emdowney</td>
+      Example: /users/user1</td>
       <td>None</td>
-      <td>A message indicating the user deregistered successfully.</td>
+      <td>A message indicating the user deregistered successfully.<br><br>
+      Example:<br>
+      user1 was deleted.
+      </td>
     </tr>
   </table>
 

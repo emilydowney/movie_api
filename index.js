@@ -97,7 +97,7 @@ app.get('/genres/:Name', (req, res) => {
 });
 });
 
-// Change a user's username
+// Change a user's information
  app.put('/users/:Username', (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username },
       { $set: 
