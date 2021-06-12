@@ -5,7 +5,10 @@ const express = require('express'),
     uuid = require('uuid'),
     mongoose = require('mongoose'),
     Models = require('./models.js'),
-    passport = require('passport');
+    passport = require('passport'),
+    cors = require('cors'); 
+
+const { check, validationResult } = require('express-validator');
 
 require('./passport');
 
@@ -18,6 +21,7 @@ mongoose.connect('mongodb://localhost:27017/[movieDB]', {
 const app = express();
 
 // Middleware
+app.use(cors());
 app.use(bodyParser.json());
 app.use(morgan('common'));
 app.use(express.static('public'));
@@ -76,7 +80,20 @@ app.get('/genres/:Name', passport.authenticate('jwt', { session: false }), (req,
    });
  })
  // Register a new user
- app.post('/users', (req, res) => {
+ app.post('/users', 
+   [
+   check('Username', 'Username is required').isLength({min: 5}),
+   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+   check('Password', 'Password is required').not().isEmpty(),
+   check('Email', 'Email does not appear to be valid').isEmail()
+   ], (req, res) => {
+    let errors = validationResult(req);
+    
+    if (!errors.isEmpty()) {
+       return res.status(422).json({ errors: errors.array() });
+    }
+
+    let hashPassword = Users.hashPassword(req.body.Password);
     Users.findOne({ Username: req.body.Username })
     .then((user) => {
        if (user) {
@@ -85,23 +102,23 @@ app.get('/genres/:Name', passport.authenticate('jwt', { session: false }), (req,
           Users
             .create({
                Username: req.body.Username,
-               Password: req.body.Password,
+               Password: hashedPassword,
                Email: req.body.Email,
                Birthday: req.body.Birthday
             })
             .then((user) => { res.status(201).json(user)
-   })
-   .catch((error) => {
-      console.error(error);
-      res.status(500).send('Error: ' + error);
+            })
+            .catch((error) => {
+               console.error(error);
+               res.status(500).send('Error: ' + error);
+            });
+         }  
       })
-   }  
-})
-.catch((error) => {
-   console.error(error);
-   res.status(500).send('Error: ' + error);
-});
-});
+      .catch((error) => {
+         console.error(error);
+         res.status(500).send('Error: ' + error);
+      });
+   });
 
 // Change a user's information
  app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -173,6 +190,7 @@ app.get('/genres/:Name', passport.authenticate('jwt', { session: false }), (req,
       });
  });
 
-app.listen(8081, () => {
-    console.log('Your app is listening on port 8081.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+   console.log('Listening on Port ' + port);
 });
