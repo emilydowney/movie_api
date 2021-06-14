@@ -18,8 +18,7 @@ const Users = Models.User;
 //mongoose.connect('mongodb://localhost:27017/[movieDB]', {
    //useNewUrlParser: true, useUnifiedTopology: true });
 
-   mongoose.connect('process.env.CONNECTION_URI', {
-      useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('process.env.CONNECTION_URI', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
 
@@ -124,12 +123,26 @@ app.get('/genres/:Name', passport.authenticate('jwt', { session: false }), (req,
    });
 
 // Change a user's information
- app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+ app.put('/users/:Username', 
+   [
+   check('Username', 'Username is required').isLength({min: 5}),
+   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+   check('Password', 'Password is required').not().isEmpty(),
+   check('Email', 'Email does not appear to be valid').isEmail()
+   ], 
+   passport.authenticate('jwt', { session: false }), 
+   (req, res) => {
+      let errors = validationResult(req);
+      if (!errors.isEmpty()) {
+         return res.status(422).json({ errors: errors.array() });
+      }
+
+    let hashPassword = Users.hashPassword(req.body.Password);
     Users.findOneAndUpdate({ Username: req.params.Username },
       { $set: 
          {
             Username: req.body.Username,
-            Password: req.body.Password,
+            Password: hashedPassword,
             Email: req.body.Email,
             Birthday: req.body.Birthday
          }
@@ -193,7 +206,7 @@ app.get('/genres/:Name', passport.authenticate('jwt', { session: false }), (req,
       });
  });
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8081;
 app.listen(port, '0.0.0.0', () => {
    console.log('Listening on Port ' + port);
 });
