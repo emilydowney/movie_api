@@ -18,9 +18,8 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 //mongoose.connect('mongodb://localhost:27017/[movieDB]', {
-   //useNewUrlParser: true, useUnifiedTopology: true });
-
-   mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+//useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
 
@@ -35,6 +34,10 @@ let auth = require('./auth')(app);
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('An error occurred.');
+})
+
+app.get('/', (req,res) => {
+   res.status(200).send('Enjoy the mvovies!')
 })
 
 // Get list of all movies
