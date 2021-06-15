@@ -1,14 +1,12 @@
 // Imports
-const cors = require('cors'); 
-app.use(cors());
-
 const express = require('express'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
     uuid = require('uuid'),
     mongoose = require('mongoose'),
     Models = require('./models.js'),
-    passport = require('passport');
+    passport = require('passport'),
+    cors = require('cors');
 
 const { check, validationResult } = require('express-validator');
 
@@ -24,6 +22,7 @@ mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifie
 const app = express();
 
 // Middleware
+app.use(cors());
 app.use(bodyParser.json());
 app.use(morgan('common'));
 app.use(express.static('public'));
