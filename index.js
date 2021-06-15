@@ -36,7 +36,7 @@ app.use((err, req, res, next) => {
 })
 
 app.get('/', (req,res) => {
-   res.status(200).send('Enjoy the mvovies!')
+   res.status(200).send('Enjoy the movies!')
 })
 
 // Get list of all movies
@@ -98,7 +98,7 @@ app.get('/genres/:Name', passport.authenticate('jwt', { session: false }), (req,
        return res.status(422).json({ errors: errors.array() });
     }
 
-    let hashPassword = Users.hashPassword(req.body.Password);
+    let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOne({ Username: req.body.Username })
     .then((user) => {
        if (user) {
@@ -140,7 +140,7 @@ app.get('/genres/:Name', passport.authenticate('jwt', { session: false }), (req,
          return res.status(422).json({ errors: errors.array() });
       }
 
-    let hashPassword = Users.hashPassword(req.body.Password);
+    let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOneAndUpdate({ Username: req.params.Username },
       { $set: 
          {
