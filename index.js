@@ -1,12 +1,14 @@
 // Imports
+const cors = require('cors'); 
+app.use(cors());
+
 const express = require('express'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
     uuid = require('uuid'),
     mongoose = require('mongoose'),
     Models = require('./models.js'),
-    passport = require('passport'),
-    cors = require('cors'); 
+    passport = require('passport');
 
 const { check, validationResult } = require('express-validator');
 
@@ -18,12 +20,11 @@ const Users = Models.User;
 //mongoose.connect('mongodb://localhost:27017/[movieDB]', {
    //useNewUrlParser: true, useUnifiedTopology: true });
 
-mongoose.connect('process.env.CONNECTION_URI', { useNewUrlParser: true, useUnifiedTopology: true });
+   mongoose.connect('process.env.CONNECTION_URI', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
 
 // Middleware
-app.use(cors());
 app.use(bodyParser.json());
 app.use(morgan('common'));
 app.use(express.static('public'));
