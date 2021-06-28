@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,25 +10,30 @@
   table {
     border-collapse: collapse;
   }
+
   th {
-    padding:20px;
+    padding: 5px;
     text-align: left;
     border-bottom: 2px solid black;
   }
+
   td {
-    padding: 20px;
+    padding: 5px;
     border-bottom: 1px solid black;
   }
 </style>
+
 <body>
   <h1>Movie API</h1>
-  <p>This web application will provide clients with information about different movies, directors, and genres. Users will also be able to sign up on the app, update their information, and form a list of their favorite movies.</p>
+  <p>This web application will provide clients with information about different movies, directors, and genres. Users
+    will also be able to sign up on the app, update their information, and form a list of their favorite movies.</p>
   <table>
     <tr>
       <th>Request</th>
       <th>URL</th>
       <th>HTTP Method</th>
       <th>Parameters</th>
+      <th>Authentication</th>
       <th>Request Body</th>
       <th>Response Body</th>
     </tr>
@@ -36,10 +42,11 @@
       <td>/movies</td>
       <td>GET</td>
       <td>N/A</td>
+      <td>Token required</td>
       <td>None</td>
       <td>A JSON object holding data of all the movies available.<br><br>
-      Example: 
-      <pre>
+        Example:
+        <pre>
       [
         {
             "name": "The Avengers",
@@ -51,18 +58,18 @@
         }
       ]
       </pre>
-     </td>
+      </td>
     </tr>
     <tr>
       <td>Retrieves data about a single movie by title.</td>
       <td>/movies/[Title]</td>
       <td>GET</td>
       <td>/[Title]<br><br>
-      Example: /movies/The%20Avengers</td>
+        Example: /movies/The%20Avengers</td>
       <td>None</td>
       <td>A JSON object holding data of a single movie.<br><br>
-      Example: 
-      <pre>
+        Example:
+        <pre>
       [
         {
             "name": "The Avengers",
@@ -77,11 +84,11 @@
       <td>/genres/[Name]</td>
       <td>GET</td>
       <td>/[Name]<br><br>
-      Example: /genres/Fantasy</td>
+        Example: /genres/Fantasy</td>
       <td>None</td>
       <td>A JSON object holding data about a certain genre based on genre name.<br><br>
-      Example:<br>
-      <pre>
+        Example:<br>
+        <pre>
         [
           {
               "name": "Fantasy",
@@ -96,11 +103,11 @@
       <td>/directors/[Name]</td>
       <td>GET</td>
       <td>/[Name]<br><br>
-      Example: /directors/Joss%20Whedon</td>
+        Example: /directors/Joss%20Whedon</td>
       <td>None</td>
       <td>A JSON object holding data about a single director.<br><br>
-      Example: 
-      <pre>
+        Example:
+        <pre>
       [
         {
             "name": "Joss Whedon",
@@ -116,15 +123,16 @@
       <td>POST</td>
       <td>N/A</td>
       <td>A JSON object holding the new user's data.<br><br>
-      Example:
-      <pre>
+        Example:
+        <pre>
       {
        "username" : "newuser"
       }
-      </pre></td>
+      </pre>
+      </td>
       <td>A JSON object holding data about the new user added plus a unique ID.<br><br>
-      Example:
-      <pre>
+        Example:
+        <pre>
       {
         "username" : "newuser",
         "id" : "12345"
@@ -137,7 +145,7 @@
       <td>/users/[Username]</td>
       <td>PUT</td>
       <td>/[Username]<br><br>
-      Example: /users/user1</td>
+        Example: /users/user1</td>
       <td>A JSON object holding the data to be updated.<br><br>
         Example:
         <pre>
@@ -162,7 +170,7 @@
       <td>/users/[Username]/favorites/[MovieID]</td>
       <td>POST</td>
       <td>/[Username]/favorites[MovieID]<br><br>
-      Example: /users/user1/favorites/123</td>
+        Example: /users/user1/favorites/123</td>
       <td>None</td>
       <td>A JSON object holding the user's updated favorites list.<br><br>
         Example:
@@ -171,14 +179,15 @@
           "username" : "user1",
           "favorites" : "123"
         }
-        </pre></td>
+        </pre>
+      </td>
     </tr>
     <tr>
       <td>Allow users to delete a movie from their favorites.</td>
       <td>/users/[Username]/favorites/[MovieID]</td>
       <td>DELETE</td>
       <td>/[Username]/favorites/[MovieID]<br><br>
-      Example: /users/user1/favorites/123</td>
+        Example: /users/user1/favorites/123</td>
       <td>None</td>
       <td>A JSON object holding the user's updated favorites list.<br><br>
         Example:
@@ -187,21 +196,23 @@
           "username" : "user1",
           "favorites" : []
         }
-        </pre></td>
+        </pre>
+      </td>
     </tr>
     <tr>
       <td>Allow existing users to deregister</td>
       <td>/users/[Username]</td>
       <td>DELETE</td>
       <td>/[Username]<br><br>
-      Example: /users/user1</td>
+        Example: /users/user1</td>
       <td>None</td>
       <td>A message indicating the user deregistered successfully.<br><br>
-      Example:<br>
-      user1 was deleted.
+        Example:<br>
+        user1 was deleted.
       </td>
     </tr>
   </table>
 
 </body>
+
 </html>
