@@ -129,7 +129,7 @@ app.post('/users',
 
 // Get information about a user
 app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Users.findOne({ 'User.Username': req.params.Username })
+  Users.findOne({ Username: req.params.Username })
     .then((user) => {
       res.json(user);
     })
@@ -175,6 +175,7 @@ app.put('/users/:Username',
         }
       });
   });
+
 // Add a movie to a user's favorites
 app.post('/users/:Username/favorites/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
   Users.findOneAndUpdate({ Username: req.params.Username },
